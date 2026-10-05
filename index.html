@@ -298,11 +298,13 @@ if(sessionStorage.getItem('unlocked') === '1') show();
 
 // قائمة الأغاني
 // قائمة الأغاني
+// قائمة الأغاني بالمسار النسبي المباشر
 const playlist = [
-  { title: "خليني في حضنك يا حبيبتي", file: "song1.mp3" },
-  { title: "وياه - الحياة بتحلى وانا معاه", file: "song2.mp3" },
-  { title: "سهرنا يا ليل", file: "song3.mp3" }
+  { title: "خليني في حضنك يا حبيبتي", file: "./song1.mp3" },
+  { title: "وياه - الحياة بتحلى وانا معاه", file: "./song2.mp3" },
+  { title: "سهرنا يا ليل", file: "./song3.mp3" }
 ];
+
 let currentSongIndex = 0;
 const audio = document.getElementById('audioPlayer');
 const trackTitle = document.getElementById('currentTrack');
@@ -313,39 +315,47 @@ function loadSong(index){
   trackTitle.innerText = playlist[index].title;
   audio.src = playlist[index].file;
 }
+
+// تحميل أول أغنية
 loadSong(0);
 
-// رسالة تنبيه في حال وجود خطأ في قراءة ملف الصوت
+// التعامل مع أخطاء التحميل
 audio.onerror = function() {
-  trackTitle.innerText = "تعذر تشغيل: " + playlist[currentSongIndex].file + " (تأكد من اسم الملف والامتداد على GitHub)";
+  trackTitle.innerText = "تعذر تحميل: " + playlist[currentSongIndex].title;
 };
 
 function togglePlay(){
   if(audio.paused){
+    // طلب التشغيل متوافق مع قيود متصفح الموبايل
     audio.play().then(() => {
       playBtn.innerText = "⏸️ إيقاف مؤقت";
     }).catch(err => {
-      alert("لم نتمكن من تشغيل الأغنية. تأكد من أن الملف باسم " + playlist[currentSongIndex].file + " مرفوع بجانب index.html تماماً وبحروف صغيرة.");
+      trackTitle.innerText = "اضغط مرة ثانية لتشغيل الصوت 🎵";
     });
   } else {
     audio.pause();
-    playBtn.innerText = "▶️️ تشغيل";
+    playBtn.innerText = "▶️ تشغيل";
   }
 }
 
 function nextSong(){
   currentSongIndex = (currentSongIndex + 1) % playlist.length;
   loadSong(currentSongIndex);
-  togglePlay();
+  audio.play().then(() => {
+    playBtn.innerText = "⏸️ إيقاف مؤقت";
+  }).catch(() => {});
 }
 
 function prevSong(){
   currentSongIndex = (currentSongIndex - 1 + playlist.length) % playlist.length;
   loadSong(currentSongIndex);
-  togglePlay();
+  audio.play().then(() => {
+    playBtn.innerText = "⏸️ إيقاف مؤقت";
+  }).catch(() => {});
 }
 
 audio.onended = nextSong;
+
 
 
 // عداد الحب (من 4 يونيو 2026)
