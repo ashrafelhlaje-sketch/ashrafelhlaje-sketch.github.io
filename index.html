@@ -43,7 +43,7 @@ body{
 }
 .card h2{text-align:center;margin-top:0;font-size:26px}
 
-/* شاشة تسجيل الدخول */
+/* شاشة الدخول */
 .login{min-height:100vh;display:flex;align-items:center;justify-content:center}
 .login .card{width:min(420px,100%);text-align:center}
 .login input{width:100%;padding:14px;border:0;border-radius:14px;margin:14px 0;text-align:center;font-size:18px;outline:none}
@@ -123,6 +123,19 @@ body{
   border-radius:18px;
   border:2px solid rgba(255,255,255,.6);
   background:rgba(255,255,255,.2);
+}
+
+/* رسالة أشرف الأخيرة */
+.special-message{
+  background:rgba(255,255,255,.28);
+  border:2px solid rgba(255,255,255,.6);
+  text-align:center;
+}
+.special-message p{
+  font-size:20px;
+  line-height:2.2;
+  margin:10px 0;
+  white-space:pre-line;
 }
 
 .logout{text-align:center;margin:30px 0}
@@ -235,21 +248,27 @@ body{
     </div>
   </section>
 
-  <!-- معرض الصور (10 صور) -->
+  <!-- معرض الصور (10 صور مباشرة بدون مجلد) -->
   <section class="card">
     <h2>أجمل ذكرياتنا بالصور 📸❤️</h2>
     <div class="gallery">
-      <img src="image1.jpg" alt="صورتنا 1">
-      <img src="image2.jpg" alt="صورتنا 2">
-      <img src="image3.jpg" alt="صورتنا 3">
-      <img src="image4.jpg" alt="صورتنا 4">
-      <img src="image5.jpg" alt="صورتنا 5">
-      <img src="image6.jpg" alt="صورتنا 6">
-      <img src="image7.jpg" alt="صورتنا 7">
-      <img src="image8.jpg" alt="صورتنا 8">
-      <img src="image9.jpg" alt="صورتنا 9">
-      <img src="image10.jpg" alt="صورتنا 10">
+      <img src="IMG-20260611-WA0019.jpg" alt="صورتنا">
+      <img src="IMG-20260611-WA0020.jpg" alt="صورتنا">
+      <img src="IMG-20260611-WA0021.jpg" alt="صورتنا">
+      <img src="IMG_20260728_185127.jpg" alt="صورتنا">
+      <img src="pic5.jpg" alt="صورتنا">
+      <img src="pic6.jpg" alt="صورتنا">
+      <img src="pic7.jpg" alt="صورتنا">
+      <img src="pic8.jpg" alt="صورتنا">
+      <img src="pic9.jpg" alt="صورتنا">
+      <img src="pic10.jpg" alt="صورتنا">
     </div>
+  </section>
+
+  <!-- خانة: هذا من حبيبك أشرف -->
+  <section class="card special-message">
+    <h2>هذا من حبيبك أشرف ❤️</h2>
+    <p>عايز اقولك انك اجمل بنوته في حياتي وعايز اقولك اني بحبك اوووي ي ماما وهفضل احبك لاخر العمر وهتفضلي دايما بنتي وكل حاجه في حياتي بحبك اوووي اوووي اوووي ي اجمل بنوته في حياتي كلها ربنا يخليكي ليا ميحرمنيش منك ابدا 🥹♥️️</p>
   </section>
 
   <div class="logout">
@@ -352,7 +371,7 @@ function toggleLetter(id){
   }
 }
 
-// تأثير تساقط القلوب
+// تساقط القلوب
 function createHeart(){
   const heart = document.createElement('div');
   heart.classList.add('heart');
