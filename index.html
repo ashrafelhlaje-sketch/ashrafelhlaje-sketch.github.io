@@ -6,59 +6,365 @@
 <title>My World ❤️</title>
 <style>
 *{box-sizing:border-box}
-body{margin:0;font-family:Arial,sans-serif;background:linear-gradient(135deg,#ffdde1,#ee9ca7);color:#fff;min-height:100vh}
-.wrap{max-width:900px;margin:auto;padding:30px 18px}
-.card{background:rgba(255,255,255,.16);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,.3);border-radius:28px;padding:28px;margin:20px 0;box-shadow:0 12px 35px rgba(0,0,0,.15)}
+body{
+  margin:0;
+  font-family:Arial,sans-serif;
+  background:linear-gradient(135deg,#ff9a9e,#fecfef,#fad0c4);
+  color:#fff;
+  min-height:100vh;
+  overflow-x:hidden;
+  position:relative;
+}
+
+/* تساقط القلوب */
+.heart{
+  position:fixed;
+  top:-10vh;
+  font-size:24px;
+  user-select:none;
+  pointer-events:none;
+  animation:fall linear infinite;
+  z-index:9999;
+}
+@keyframes fall{
+  0%{transform:translateY(0) rotate(0deg);opacity:1;}
+  100%{transform:translateY(110vh) rotate(360deg);opacity:0;}
+}
+
+.wrap{max-width:900px;margin:auto;padding:30px 18px;position:relative;z-index:1}
+.card{
+  background:rgba(255,255,255,.2);
+  backdrop-filter:blur(14px);
+  border:1px solid rgba(255,255,255,.4);
+  border-radius:28px;
+  padding:28px;
+  margin:24px 0;
+  box-shadow:0 12px 35px rgba(0,0,0,.1);
+}
+.card h2{text-align:center;margin-top:0;font-size:26px}
+
+/* شاشة تسجيل الدخول */
 .login{min-height:100vh;display:flex;align-items:center;justify-content:center}
 .login .card{width:min(420px,100%);text-align:center}
-.login input{width:100%;padding:14px;border:0;border-radius:14px;margin:12px 0;text-align:center;font-size:18px}
-.btn{border:0;border-radius:14px;padding:13px 25px;background:#fff;color:#d94f70;font-weight:bold;cursor:pointer;font-size:16px}
-#site{display:none}.hero{text-align:center;padding:35px 10px}.hero h1{font-size:48px;margin:10px}.hero p{font-size:20px}
-.message{font-size:20px;line-height:2;text-align:center}
-.gallery{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px}
-.gallery img{width:100%;height:240px;object-fit:cover;border-radius:18px;border:2px solid rgba(255,255,255,.5)}
-.memory{text-align:center;font-size:19px;line-height:2}.logout{text-align:center}
+.login input{width:100%;padding:14px;border:0;border-radius:14px;margin:14px 0;text-align:center;font-size:18px;outline:none}
+.btn{
+  border:0;
+  border-radius:14px;
+  padding:12px 24px;
+  background:#fff;
+  color:#d94f70;
+  font-weight:bold;
+  cursor:pointer;
+  font-size:16px;
+  transition:.3s;
+}
+.btn:hover{background:#ffe3ea;transform:scale(1.03)}
+
+#site{display:none}
+.hero{text-align:center;padding:25px 10px}
+.hero h1{font-size:46px;margin:10px}
+.hero p{font-size:20px}
+
+/* مشغل الموسيقى */
+.player{text-align:center}
+.player-controls{display:flex;justify-content:center;gap:12px;margin-top:14px;align-items:center;flex-wrap:wrap}
+.track-title{font-size:18px;font-weight:bold;margin:10px 0}
+
+/* عداد الحب */
+.timer-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(90px,1fr));
+  gap:12px;
+  margin-top:16px;
+  text-align:center;
+}
+.timer-box{
+  background:rgba(255,255,255,.25);
+  padding:14px 8px;
+  border-radius:16px;
+  border:1px solid rgba(255,255,255,.3);
+}
+.timer-num{font-size:28px;font-weight:bold}
+.timer-label{font-size:14px;margin-top:4px}
+
+/* قسم الرسائل الخاصة */
+.letter-box{
+  background:rgba(255,255,255,.15);
+  border-radius:18px;
+  margin-bottom:14px;
+  overflow:hidden;
+  border:1px solid rgba(255,255,255,.25);
+}
+.letter-header{
+  padding:16px 20px;
+  font-size:18px;
+  font-weight:bold;
+  cursor:pointer;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  background:rgba(255,255,255,.1);
+}
+.letter-content{
+  padding:20px;
+  font-size:16px;
+  line-height:2;
+  white-space:pre-line;
+  display:none;
+  border-top:1px solid rgba(255,255,255,.2);
+}
+
+/* معرض الصور */
+.gallery{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:14px}
+.gallery img{
+  width:100%;
+  height:220px;
+  object-fit:cover;
+  border-radius:18px;
+  border:2px solid rgba(255,255,255,.6);
+  background:rgba(255,255,255,.2);
+}
+
+.logout{text-align:center;margin:30px 0}
 </style>
 </head>
 <body>
-<div id="login" class="login"><div class="card">
-<h1>My World ❤️</h1><p>المكان ده ليكي إنتِ وبس 💕</p>
-<input id="password" type="password" placeholder="اكتبي الباسورد">
-<button class="btn" onclick="enter()">دخول ❤️</button>
-<p id="error" style="display:none">الباسورد مش صحيح ❤️</p>
-</div></div>
 
-<div id="site" class="wrap">
-<section class="hero"><h1>My World ❤️</h1><p>إنتِ أجمل حاجة في عالمي</p></section>
-
-<section class="card">
-<h2>رسالة حب ❤️</h2>
-<div class="message">عايز اقولك انك اجمل بنوته عرفتها في حياتي بحب ي اجمل حاجه حصلتلي هتفضلي دايما بنتي وكل حاجه جميله في حياتي</div>
-</section>
-
-<section class="card">
-<h2>صورنا ❤️📸</h2>
-<div class="gallery">
-<img src="IMG-20260611-WA0019.jpg" alt="صورتنا الأولى">
-<img src="IMG-20260611-WA0020.jpg" alt="صورتنا الثانية">
-<img src="IMG-20260611-WA0021.jpg" alt="صورتنا الثالثة">
-<img src="IMG_20260728_185127.jpg" alt="صورتنا الرابعة">
+<!-- شاشة الدخول -->
+<div id="login" class="login">
+  <div class="card">
+    <h1>My World ❤️</h1>
+    <p>المكان ده ليكي إنتِ وبس 💕</p>
+    <input id="password" type="password" placeholder="اكتبي الباسورد">
+    <button class="btn" onclick="enter()">دخول ❤️</button>
+    <p id="error" style="display:none;color:#fff;margin-top:10px">الباسورد مش صحيح ❤️</p>
+  </div>
 </div>
-</section>
 
-<section class="card memory"><h2>ذكرياتنا 🌹</h2><p>كل لحظة معاكي ليها مكان خاص في قلبي ❤️</p></section>
-<div class="logout"><button class="btn" onclick="logout()">خروج</button></div>
+<!-- محتوى الموقع بعد تسجيل الدخول -->
+<div id="site" class="wrap">
+  <section class="hero">
+    <h1>My World ❤️</h1>
+    <p>إنتِ أجمل حاجة في عالمي</p>
+  </section>
+
+  <!-- مشغل الموسيقى -->
+  <section class="card player">
+    <h2>أغانينا المفضلة 🎵</h2>
+    <div class="track-title" id="currentTrack">اسم الأغنية</div>
+    <audio id="audioPlayer" src=""></audio>
+    <div class="player-controls">
+      <button class="btn" onclick="prevSong()">⏮️ السابقة</button>
+      <button class="btn" onclick="togglePlay()" id="playBtn">▶️ تشغيل</button>
+      <button class="btn" onclick="nextSong()">⏭️ التالية</button>
+    </div>
+  </section>
+
+  <!-- عداد الحب -->
+  <section class="card">
+    <h2>مع بعض من أجمل يوم ❤️</h2>
+    <div class="timer-grid">
+      <div class="timer-box"><div class="timer-num" id="days">0</div><div class="timer-label">أيام</div></div>
+      <div class="timer-box"><div class="timer-num" id="hours">0</div><div class="timer-label">ساعات</div></div>
+      <div class="timer-box"><div class="timer-num" id="minutes">0</div><div class="timer-label">دقائق</div></div>
+      <div class="timer-box"><div class="timer-num" id="seconds">0</div><div class="timer-label">ثواني</div></div>
+    </div>
+  </section>
+
+  <!-- رسائل خاصة -->
+  <section class="card">
+    <h2>رسائل لقلبك 💌</h2>
+
+    <div class="letter-box">
+      <div class="letter-header" onclick="toggleLetter(1)">
+        <span>عندما تكوني حزينة يا أميرتي 🌸</span>
+        <span id="arrow1">🔽</span>
+      </div>
+      <div class="letter-content" id="content1">
+انا دايما جمبك ومعايا ومتشليش هم اي حاجه في الدنيا دي هفضل جمبك لاخر العمر ❤️
+      </div>
+    </div>
+
+    <div class="letter-box">
+      <div class="letter-header" onclick="toggleLetter(2)">
+        <span>عندما تحسين نفسك مخنوقة 🌿</span>
+        <span id="arrow2">🔽</span>
+      </div>
+      <div class="letter-content" id="content2">
+انتي مش مجرد بنت بحبها
+
+انتي صاحبة روحي واکثر شخص بيريحني وأحن حد عدى على قلبي واكتر واحدة استحملت حاجات حتى انا نفسي مكنتش مستحملها فيا انتي اللي فضلت جنبي في الحلو والوحش
+
+وحتى اللحظات اللي انا كنت فيها نسخة مش ظريفة ومكنتش قادر افهم نفسي انتي برضه كنتي حضني اللي برجع له من غير ما اضايق ومن غير ما اخاف
+
+انا مشوفتش حد بيحبني بالشكل ده ولا عمري توقعت الاقي حد بالشكل ده
+
+عشان كده يوم ميلادك مش يوم عادي
+
+ده اليوم اللي لازم اشكرك فيه قد الدنيا
+
+على كل مرة ضحكتيني
+
+على كل مرة سمعتيني
+
+على كل مرة فهمتيني
+
+على كل مرة خدتيني من تعب لراحة ومن دوشة لهدوء
+
+انا مش بتمنىلك في يوم ميلادك بس انك تبقي مبسوطة
+
+انا بتمنى يبقى يوم بداية لسنين كلها خير وفرح وراحة قلب
+
+بتمنى كل حاجة نفسك فيها تتحقق بتمنى اشوفك دايما اقوى وأطمن عليكي وانتي واقفة على رجلك ومحدش قادر يكسرك
+
+بتمنى اشوفك بتكبري في كل حاجة وبتحققي احلامك وبتمنى اكون جزء من كل ده مش علشان اطمع فيكي
+
+بس عشان انتي الشخص اللي فعلا يستاهل ابقى جنبه ويستاهل ابقى معاه للآخر
+بحبك ي اجمل بنوته في الدنيا ❤️
+      </div>
+    </div>
+
+    <div class="letter-box">
+      <div class="letter-header" onclick="toggleLetter(3)">
+        <span>في يوم ميلادك 🎂</span>
+        <span id="arrow3">🔽</span>
+      </div>
+      <div class="letter-content" id="content3">
+كل سنة وانتي طيبة يا حبيبتي وكل سنة وانتي أحلى حاجة حصلتلي من يوم ما فهمت يعني ايه حد يحب بجد ويخاف على حد بجد ويشوف فيه حياته كلها من غير ما يدور ولا يسأل ولا يعمل حساب لأي حاجة انا بكتبلك الكلام ده وانا مش عايز أظهر قدامك اني شاعر ولا بعمل فيها رومانسي زيادة انا بكتبه عشان انتي تستاهلي يتكتبلك كلام يشرح اللي جوايا زي ما هو ومن غير تزيين ولا تمثيل لأن اللي بينا مش محتاج لف ودوران ولا محتاج حد يجمله انتي أصلا جماله كله يوم ميلادك بالنسبالي مش مجرد رقم في السنة ولا يوم بيعدي وخلاص ده يوم انا برجع افتكر فيه انا كنت عامل ازاي قبل ما تدخلي حياتي وازاي بقت حياتي دلوقتي بعد ما بقيتي فيها وصدقيني الفرق كبير كبير لدرجة مخلياني مش فاكر انا كنت بشوف الدنيا ازاي قبل ما يبقى عندي حد زيك يمسك ايدي من غير كلام ويطمن قلبي من غير ما يضغط على نفسه مجرد حضورك كفاية اني أحس اني راجل اتولد تاني ومبقتش لوحدي انتي البنت اللي غيرت كل حاجة جوايا بضحكة خفيفة واهتمام بسيط وكلمة كنت محتاج أسمعها من غير ما أطلب حتى انتي اللي خلتيني ابقى عارف يعني ايه حد يكون جنبك وانت مضغوط ومش قادر تتكلم ويفضل جنبك برضه انتي اللي خلتيني ابقى مطمن ان في حد شايف اللي محدش بيشوفه حتى الحاجات اللي انا بخبيها من الناس انتي بتقريها في عيني وبتفهميها من نفسي الطويل انتي اللي خلتيني افهم ان الحب مش بس كلمة ولا هزار ولا خروج ولا يوم حلو وبس الحب إنك تقصي معاكي يومك كله وتخليه حلو من غير ما تعملي مجهود كبير الحب ان صوتك بس ينقلني من حالة لحالة وإنك لما تقوليلي انا هنا احس اني ملكت الدنيا كلها ❤
+      </div>
+    </div>
+  </section>
+
+  <!-- معرض الصور (10 صور) -->
+  <section class="card">
+    <h2>أجمل ذكرياتنا بالصور 📸❤️</h2>
+    <div class="gallery">
+      <img src="image1.jpg" alt="صورتنا 1">
+      <img src="image2.jpg" alt="صورتنا 2">
+      <img src="image3.jpg" alt="صورتنا 3">
+      <img src="image4.jpg" alt="صورتنا 4">
+      <img src="image5.jpg" alt="صورتنا 5">
+      <img src="image6.jpg" alt="صورتنا 6">
+      <img src="image7.jpg" alt="صورتنا 7">
+      <img src="image8.jpg" alt="صورتنا 8">
+      <img src="image9.jpg" alt="صورتنا 9">
+      <img src="image10.jpg" alt="صورتنا 10">
+    </div>
+  </section>
+
+  <div class="logout">
+    <button class="btn" onclick="logout()">خروج</button>
+  </div>
 </div>
 
 <script>
+// الدخول والباسورد
 function enter(){
- if(document.getElementById('password').value==='282007'){
-  sessionStorage.setItem('unlocked','1');show();
- }else document.getElementById('error').style.display='block'
+  if(document.getElementById('password').value === '282007'){
+    sessionStorage.setItem('unlocked','1');
+    show();
+  } else {
+    document.getElementById('error').style.display='block';
+  }
 }
-function show(){document.getElementById('login').style.display='none';document.getElementById('site').style.display='block'}
-function logout(){sessionStorage.removeItem('unlocked');location.reload()}
-if(sessionStorage.getItem('unlocked')==='1')show();
+function show(){
+  document.getElementById('login').style.display='none';
+  document.getElementById('site').style.display='block';
+}
+function logout(){
+  sessionStorage.removeItem('unlocked');
+  location.reload();
+}
+if(sessionStorage.getItem('unlocked') === '1') show();
+
+// قائمة الأغاني
+const playlist = [
+  { title: "خليني في حضنك يا حبيبتي", file: "song1.mp3" },
+  { title: "وياه - الحياة بتحلى وانا معاه", file: "song2.mp3" },
+  { title: "سهرنا يا ليل", file: "song3.mp3" }
+];
+let currentSongIndex = 0;
+const audio = document.getElementById('audioPlayer');
+const trackTitle = document.getElementById('currentTrack');
+const playBtn = document.getElementById('playBtn');
+
+function loadSong(index){
+  currentSongIndex = index;
+  trackTitle.innerText = playlist[index].title;
+  audio.src = playlist[index].file;
+}
+loadSong(0);
+
+function togglePlay(){
+  if(audio.paused){
+    audio.play();
+    playBtn.innerText = "⏸️ إيقاف مؤقت";
+  } else {
+    audio.pause();
+    playBtn.innerText = "▶️ تشغيل";
+  }
+}
+function nextSong(){
+  currentSongIndex = (currentSongIndex + 1) % playlist.length;
+  loadSong(currentSongIndex);
+  audio.play();
+  playBtn.innerText = "⏸️ إيقاف مؤقت";
+}
+function prevSong(){
+  currentSongIndex = (currentSongIndex - 1 + playlist.length) % playlist.length;
+  loadSong(currentSongIndex);
+  audio.play();
+  playBtn.innerText = "⏸️ إيقاف مؤقت";
+}
+audio.onended = nextSong;
+
+// عداد الحب (من 4 يونيو 2026)
+const startDate = new Date("2026-06-04T00:00:00");
+function updateTimer(){
+  const now = new Date();
+  const diff = now - startDate;
+
+  if (diff > 0) {
+    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+    const minutes = Math.floor((diff / (1000 * 60)) % 60);
+    const seconds = Math.floor((diff / 1000) % 60);
+
+    document.getElementById('days').innerText = days;
+    document.getElementById('hours').innerText = hours;
+    document.getElementById('minutes').innerText = minutes;
+    document.getElementById('seconds').innerText = seconds;
+  }
+}
+setInterval(updateTimer, 1000);
+updateTimer();
+
+// فتح وغلق الرسائل
+function toggleLetter(id){
+  const content = document.getElementById('content' + id);
+  const arrow = document.getElementById('arrow' + id);
+  if(content.style.display === 'block'){
+    content.style.display = 'none';
+    arrow.innerText = '🔽';
+  } else {
+    content.style.display = 'block';
+    arrow.innerText = '🔼';
+  }
+}
+
+// تأثير تساقط القلوب
+function createHeart(){
+  const heart = document.createElement('div');
+  heart.classList.add('heart');
+  const emojis = ['❤️', '💖', '💕', '💗', '💓', '🌸'];
+  heart.innerText = emojis[Math.floor(Math.random() * emojis.length)];
+  heart.style.left = Math.random() * 100 + 'vw';
+  heart.style.animationDuration = (Math.random() * 3 + 3) + 's';
+  heart.style.fontSize = (Math.random() * 16 + 18) + 'px';
+  document.body.appendChild(heart);
+  setTimeout(() => { heart.remove(); }, 6000);
+}
+setInterval(createHeart, 450);
 </script>
 </body>
 </html>
