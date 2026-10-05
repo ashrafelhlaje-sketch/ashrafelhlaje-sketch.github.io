@@ -297,6 +297,7 @@ function logout(){
 if(sessionStorage.getItem('unlocked') === '1') show();
 
 // قائمة الأغاني
+// قائمة الأغاني
 const playlist = [
   { title: "خليني في حضنك يا حبيبتي", file: "song1.mp3" },
   { title: "وياه - الحياة بتحلى وانا معاه", file: "song2.mp3" },
@@ -314,28 +315,38 @@ function loadSong(index){
 }
 loadSong(0);
 
+// رسالة تنبيه في حال وجود خطأ في قراءة ملف الصوت
+audio.onerror = function() {
+  trackTitle.innerText = "تعذر تشغيل: " + playlist[currentSongIndex].file + " (تأكد من اسم الملف والامتداد على GitHub)";
+};
+
 function togglePlay(){
   if(audio.paused){
-    audio.play();
-    playBtn.innerText = "⏸️ إيقاف مؤقت";
+    audio.play().then(() => {
+      playBtn.innerText = "⏸️ إيقاف مؤقت";
+    }).catch(err => {
+      alert("لم نتمكن من تشغيل الأغنية. تأكد من أن الملف باسم " + playlist[currentSongIndex].file + " مرفوع بجانب index.html تماماً وبحروف صغيرة.");
+    });
   } else {
     audio.pause();
-    playBtn.innerText = "▶️ تشغيل";
+    playBtn.innerText = "▶️️ تشغيل";
   }
 }
+
 function nextSong(){
   currentSongIndex = (currentSongIndex + 1) % playlist.length;
   loadSong(currentSongIndex);
-  audio.play();
-  playBtn.innerText = "⏸️ إيقاف مؤقت";
+  togglePlay();
 }
+
 function prevSong(){
   currentSongIndex = (currentSongIndex - 1 + playlist.length) % playlist.length;
   loadSong(currentSongIndex);
-  audio.play();
-  playBtn.innerText = "⏸️ إيقاف مؤقت";
+  togglePlay();
 }
+
 audio.onended = nextSong;
+
 
 // عداد الحب (من 4 يونيو 2026)
 const startDate = new Date("2026-06-04T00:00:00");
