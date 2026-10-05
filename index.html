@@ -65,17 +65,12 @@ body{
 .hero h1{font-size:46px;margin:10px}
 .hero p{font-size:20px}
 
-/* مشغل المقاطع الصوتية */
-.player{text-align:center}
-.track-title{font-size:19px;font-weight:bold;margin:12px 0}
-.player-controls{display:flex;justify-content:center;gap:12px;margin-top:14px;align-items:center;flex-wrap:wrap}
-audio{
-  width:100%;
-  max-width:480px;
-  margin:15px auto;
-  display:block;
-  border-radius:30px;
-  outline:none;
+/* خانة الذكريات البديلة للأغاني */
+.intro-box{
+  text-align:center;
+  font-size:22px;
+  line-height:2;
+  font-weight:bold;
 }
 
 /* عداد الحب */
@@ -164,7 +159,7 @@ audio{
     <h1>My World ❤️</h1>
     <p>المكان ده ليكي إنتِ وبس 💕</p>
     <input id="password" type="password" placeholder="اكتبي الباسورد">
-    <button class="btn" onclick="enter()">دخول ❤️</button>
+    <button class="btn" onclick="enter()">دخول ❤️️</button>
     <p id="error" style="display:none;color:#fff;margin-top:10px">الباسورد مش صحيح ❤️</p>
   </div>
 </div>
@@ -172,24 +167,14 @@ audio{
 <!-- محتوى الموقع بعد تسجيل الدخول -->
 <div id="site" class="wrap">
   <section class="hero">
-    <h1>My World ❤️</h1>
+    <h1>My World ❤️️</h1>
     <p>إنتِ أجمل حاجة في عالمي</p>
   </section>
 
-  <!-- مشغل المقاطع الصوتية -->
-  <section class="card player">
-    <h2>أجمل المقاطع 🎵</h2>
-    <div class="track-title" id="currentTrack">خليني في حضنك يا حبيبتي</div>
-    
-    <audio id="audioPlayer" controls playsinline preload="auto">
-      <source id="audioSource" src="song1.mp3" type="audio/mpeg">
-      متصفحك لا يدعم تشغيل الصوت
-    </audio>
-
-    <div class="player-controls">
-      <button class="btn" onclick="prevSong()">⏮️ السابق</button>
-      <button class="btn" onclick="nextSong()">⏭️ التالي</button>
-    </div>
+  <!-- خانة الذكريات بدلاً من الأغاني -->
+  <section class="card intro-box">
+    <p style="margin: 0;">هذا المكان معمول لذكرياتنا مع بعض ❤️</p>
+    <p style="margin: 10px 0 0 0;">معمول ليكي انتي يبنوتي 🥹♥️</p>
   </section>
 
   <!-- عداد الحب -->
@@ -284,10 +269,10 @@ audio{
     </div>
   </section>
 
-  <!-- هذا من حبيبك اشرف -->
+  <!-- خانة: هذا من حبيبك اشرف -->
   <section class="card special-message">
     <h2>هذا من حبيبك اشرف ❤️</h2>
-    <p>عايز اقولك انك اجمل بنوته في حياتي وعايز اقولك اني بحبك اوووي ي ماما وهفضل احبك لاخر العمر وهتفضلي دايما بنتي وكل حاجه في حياتي بحبك اوووي اوووي اوووي ي اجمل بنوته في حياتي كلها ربنا يخليكي ليا ميحرمنيش منك ابدا 🥹♥️️</p>
+    <p>عايز اقولك انك اجمل بنوته في حياتي وعايز اقولك اني بحبك اوووي ي ماما وهفضل احبك لاخر العمر وهتفضلي دايما بنتي وكل حاجه في حياتي بحبك اوووي اوووي اوووي ي اجمل بنوته في حياتي كلها ربنا يخليكي ليا ميحرمنيش منك ابدا 🥹♥</p>
   </section>
 
   <div class="logout">
@@ -314,36 +299,6 @@ function logout(){
   location.reload();
 }
 if(sessionStorage.getItem('unlocked') === '1') show();
-
-// قائمة الأغاني والمقاطع
-const playlist = [
-  { title: "خليني في حضنك يا حبيبتي", file: "song1.mp3" },
-  { title: "وياه - الحياة بتحلى وانا معاه", file: "song2.mp3" },
-  { title: "سهرنا يا ليل", file: "song3.mp3" }
-];
-
-let currentSongIndex = 0;
-const audio = document.getElementById('audioPlayer');
-const trackTitle = document.getElementById('currentTrack');
-
-function loadSong(index){
-  currentSongIndex = index;
-  trackTitle.innerText = playlist[index].title;
-  audio.src = playlist[index].file;
-  audio.load();
-}
-
-function nextSong(){
-  currentSongIndex = (currentSongIndex + 1) % playlist.length;
-  loadSong(currentSongIndex);
-  audio.play().catch(() => {});
-}
-
-function prevSong(){
-  currentSongIndex = (currentSongIndex - 1 + playlist.length) % playlist.length;
-  loadSong(currentSongIndex);
-  audio.play().catch(() => {});
-}
 
 // عداد الحب (من 4 يونيو 2026)
 const startDate = new Date("2026-06-04T00:00:00");
